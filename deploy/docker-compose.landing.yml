@@ -1,0 +1,25 @@
+# landing-frontend service for the platform home.
+# Drop into ai-infra alongside the other agent compose files and bring it up on the
+# existing shared-network, then add deploy/shared-nginx.location.conf to shared-nginx
+# and reload nginx. Mirrors the compliance-frontend service shape.
+#
+#   podman-compose -f docker-compose.landing.yml up -d --build
+#   podman exec shared-nginx nginx -s reload
+#
+services:
+  landing-frontend:
+    container_name: landing-frontend
+    build:
+      context: ..
+      dockerfile: deploy/Containerfile
+    image: localhost/landing-frontend:latest
+    restart: unless-stopped
+    networks:
+      - shared-network
+    # No host port: shared-nginx is the only ingress (it proxies `/` here internally).
+    expose:
+      - "80"
+
+networks:
+  shared-network:
+    external: true

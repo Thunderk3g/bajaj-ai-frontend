@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bajaj-navy: #002c6e;
+  --bajaj-blue: #0072ce;
+  --bajaj-bg: #f4f7fb;
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-surface-sunken text-ink font-sans antialiased;
+    margin: 0;
+    min-height: 100vh;
+    /* Soft corporate wash: a faint blue light from the top, like a clean lobby. */
+    background-image:
+      radial-gradient(1200px 600px at 50% -10%, rgba(0, 114, 206, 0.10), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(0, 44, 110, 0.06), transparent 55%);
+    background-attachment: fixed;
+  }
+
+  /* Visible, on-brand focus ring for keyboard users: a solid 2px outline that
+     can't be clipped by overflow/box-shadow and meets the 3:1 indicator contrast. */
+  :focus-visible {
+    outline: 2px solid #0072ce;
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+
+  ::selection {
+    background: rgba(0, 114, 206, 0.18);
+  }
+
+  /* Respect users who ask for less motion: neutralize the looping pulse and
+     entrance animations (WCAG 2.3.3). */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Frosted card surface used across the platform tiles. */
+  .surface-card {
+    @apply bg-surface border border-line rounded-2xl shadow-e1;
+  }
+
+  .hairline {
+    @apply border-line;
+  }
+}
