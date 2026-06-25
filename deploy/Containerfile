@@ -5,7 +5,9 @@
 # Bajaj Artifactory mirror on the VM.
 
 # ---- build ----
-FROM node:20-alpine AS build
+# Fully-qualified base images: the VM's registries.conf uses
+# short-name-mode = enforcing, where bare `node:20-alpine` fails to resolve.
+FROM docker.io/library/node:20-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm ci --no-audit --no-fund || npm install --no-audit --no-fund
@@ -13,7 +15,7 @@ COPY . .
 RUN npm run build
 
 # ---- serve ----
-FROM nginx:alpine
+FROM docker.io/library/nginx:alpine
 COPY deploy/landing.nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80

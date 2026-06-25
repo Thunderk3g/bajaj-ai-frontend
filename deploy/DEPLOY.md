@@ -34,7 +34,9 @@ one `nginx:alpine` container per frontend (`landing-frontend`) on `shared-networ
 3. **Add the root route to shared-nginx.** Insert the contents of
    `deploy/shared-nginx.location.conf` into the shared `nginx.conf` `server {}` block, **after**
    the existing `/compliance`, `/compliance/api/`, `/pgadmin/` (and commented `/seo/`) locations
-   and the `= /health` block. Then reload:
+   and the `/health` block. The block uses the lazy `set $landing ...; proxy_pass $landing;`
+   form on purpose — it matches the resilient routing of the other agents, so a down landing
+   container 502s only `/` instead of failing the whole `nginx -t`/reload. Then reload:
    ```bash
    podman exec shared-nginx nginx -t      # validate config
    podman exec shared-nginx nginx -s reload
