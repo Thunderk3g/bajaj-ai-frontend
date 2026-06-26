@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Badge } from "@/components/ui/Badge";
 import type { Tone } from "@/components/ui/StatusDot";
-import { ChevronDownIcon } from "@/icons";
+import { ChevronLeftIcon } from "@/icons";
 import { MetricSparkline } from "@/monitoring/components/MetricSparkline";
 import { MetricBar, memTone } from "@/monitoring/components/MetricBar";
 import { LogViewer } from "@/monitoring/components/LogViewer";
@@ -67,10 +67,10 @@ export function ContainerDetail({
             aria-label={statsOpen ? "Collapse metrics" : "Expand metrics"}
             title={statsOpen ? "Collapse" : "Expand"}
           >
-            <ChevronDownIcon
+            <ChevronLeftIcon
               width={18}
               height={18}
-              className={`transition-transform ${statsOpen ? "" : "-rotate-90"}`}
+              className={`transition-transform ${statsOpen ? "rotate-90" : "rotate-180"}`}
             />
           </button>
         </div>
