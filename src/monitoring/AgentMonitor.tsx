@@ -88,7 +88,7 @@ export function AgentMonitor() {
             </aside>
 
             {/* Right: detail + logs */}
-            <section className="flex min-h-0 flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-e1 lg:max-h-[calc(100vh-12rem)]">
+            <section className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-e1 max-h-[calc(100vh-12rem)]">
               {selectedContainer ? (
                 <ContainerDetail
                   container={selectedContainer}
