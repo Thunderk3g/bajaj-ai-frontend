@@ -1,9 +1,17 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Badge } from "@/components/ui/Badge";
 import { BajajMark, ActivityIcon } from "@/icons";
+import { logout } from "@/lib/auth";
 import type { Display } from "@/lib/status";
 
 export function TopBar({ status }: { status: Display }) {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-surface-sunken/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-5 sm:px-8">
@@ -35,6 +43,13 @@ export function TopBar({ status }: { status: Display }) {
           <Badge tone="idle" variant="outline" className="font-mono text-[11px]">
             VM · 10.3.5.99
           </Badge>
+          <button
+            onClick={handleLogout}
+            className="rounded-lg px-3 py-1 text-sm font-semibold text-ink-muted transition-colors hover:bg-line hover:text-ink focus-visible:outline-none focus-visible:shadow-focus"
+            title="Sign out"
+          >
+            Sign out
+          </button>
         </div>
       </div>
     </header>
