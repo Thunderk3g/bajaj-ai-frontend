@@ -38,6 +38,12 @@ export interface Agent {
   healthCheck?: HealthCheck;
   /** Declared baseline uptime shown when no live metric is available (0..1). */
   uptime?: number;
+  /**
+   * Monitoring group id when it differs from `id`. The monitoring backend groups
+   * containers by name-prefix (`compliance-`, `seo-`, `shared-`, ...), so the
+   * "Data & Infrastructure" card (`id: "infra"`) must point at the `shared` group.
+   */
+  monitorGroup?: string;
 }
 
 /** Platform-wide health probe (nginx `location /health`). */
@@ -77,6 +83,7 @@ export const AGENTS: Agent[] = [
     href: "/pgadmin/",
     status: "live",
     icon: "database",
+    monitorGroup: "shared",
     tags: ["pgvector", "Redis", "pgAdmin"],
     // pgAdmin has no health endpoint; its root 302s to a login page. Treat the
     // redirect/auth responses as "reachable" so a logged-out probe still reads up.
