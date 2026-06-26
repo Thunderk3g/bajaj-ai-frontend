@@ -81,6 +81,22 @@ export function ClockIcon(props: IconProps) {
   );
 }
 
+export function ChevronLeftIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M15 6l-6 6 6 6" />
+    </svg>
+  );
+}
+
+export function ActivityIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M3 12h4l2.5 7 5-14 2.5 7h4" />
+    </svg>
+  );
+}
+
 export const AGENT_ICONS: Record<IconKey, (props: IconProps) => JSX.Element> = {
   shield: ShieldIcon,
   search: SearchIcon,

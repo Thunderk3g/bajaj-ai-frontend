@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/Card";
 import { Badge, Tag } from "@/components/ui/Badge";
 import { StatusDot } from "@/components/ui/StatusDot";
-import { AGENT_ICONS, ArrowRightIcon, ExternalLinkIcon } from "@/icons";
+import { AGENT_ICONS, ArrowRightIcon, ExternalLinkIcon, ActivityIcon } from "@/icons";
 import { formatUptime } from "@/lib/utils";
 import { resolveAgentDisplay } from "@/lib/status";
 import type { Agent } from "@/lib/agents";
@@ -77,18 +78,38 @@ export function AgentCard({ agent, live }: AgentCardProps) {
           <span className="text-sm font-semibold text-ink-subtle">Soon</span>
         )}
       </div>
+
+      {/* Secondary, independent entry to this agent's logs & metrics. Sits above
+          the primary (stretched) card link via z-index so it captures its own
+          clicks without disturbing the card's main navigation. */}
+      <div className="mt-3 border-t border-line pt-3">
+        <Link
+          to={`/monitoring/${agent.id}`}
+          className="relative z-10 inline-flex items-center gap-1.5 rounded-lg text-xs font-semibold text-ink-muted transition-colors hover:text-brand focus-visible:outline-none focus-visible:shadow-focus"
+          aria-label={`${agent.name}: logs & metrics`}
+        >
+          <ActivityIcon width={14} height={14} />
+          Logs &amp; metrics
+        </Link>
+      </div>
     </Card>
   );
 
-  if (!isLink) return <div className="group h-full">{inner}</div>;
+  if (!isLink) return <div className="group relative h-full">{inner}</div>;
   return (
-    <a
-      href={agent.href!}
-      className="group block h-full rounded-2xl focus-visible:outline-none focus-visible:shadow-focus"
-      aria-labelledby={titleId}
-      aria-describedby={descId}
-    >
+    <div className="group relative h-full">
+      {/* Primary link: stretched over the whole card so click-anywhere still
+          opens the agent — unchanged behaviour, now with room for the secondary
+          link as a sibling (valid HTML, no nested anchors). */}
+      <a
+        href={agent.href!}
+        className="absolute inset-0 z-0 rounded-2xl focus-visible:outline-none focus-visible:shadow-focus"
+        aria-labelledby={titleId}
+        aria-describedby={descId}
+      >
+        <span className="sr-only">Open {agent.name}</span>
+      </a>
       {inner}
-    </a>
+    </div>
   );
 }

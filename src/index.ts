@@ -25,6 +25,8 @@ export {
   ArrowRightIcon,
   ExternalLinkIcon,
   ClockIcon,
+  ChevronLeftIcon,
+  ActivityIcon,
 } from "@/icons";
 
 // Domain types used by the components

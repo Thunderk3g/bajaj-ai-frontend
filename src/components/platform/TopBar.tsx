@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/Badge";
-import { BajajMark } from "@/icons";
+import { BajajMark, ActivityIcon } from "@/icons";
 import type { Display } from "@/lib/status";
 
 export function TopBar({ status }: { status: Display }) {
@@ -21,6 +22,13 @@ export function TopBar({ status }: { status: Display }) {
         </a>
 
         <div className="flex shrink-0 items-center gap-3">
+          <Link
+            to="/monitoring"
+            className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-semibold text-ink-muted transition-colors hover:text-brand focus-visible:outline-none focus-visible:shadow-focus"
+          >
+            <ActivityIcon width={16} height={16} />
+            <span className="hidden sm:inline">Monitoring</span>
+          </Link>
           <Badge tone={status.tone} dot pulse={status.pulse} className="hidden sm:inline-flex">
             {status.label}
           </Badge>
