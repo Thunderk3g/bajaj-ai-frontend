@@ -25,7 +25,7 @@ const BOTTOM_SLACK = 24;
  * "reconnecting…" chip on SSE drops.
  */
 export function LogViewer({ name, enabled }: LogViewerProps) {
-  const { lines, connection, truncated, errorMessage } = useContainerLogs(name, enabled);
+  const { lines, connection, truncated, errorMessage, clear } = useContainerLogs(name, enabled);
 
   const [follow, setFollow] = useState(true);
   const [query, setQuery] = useState("");
@@ -130,6 +130,15 @@ export function LogViewer({ name, enabled }: LogViewerProps) {
           aria-pressed={follow}
         >
           {follow ? "Following" : "Paused"}
+        </Button>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={clear}
+          disabled={lines.length === 0}
+          title="Clear the log buffer"
+        >
+          Clear
         </Button>
         {connectionChip}
       </div>
